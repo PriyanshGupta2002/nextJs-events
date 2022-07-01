@@ -1,13 +1,19 @@
 import classes from './newsletter-registration.module.css';
-import {useRef, useState} from 'react'
-import Modal from '../modal/modal';
-import Backdrop from '../modal/backdrop';
+import {useContext, useRef} from 'react'
+
+import NotificationContext from '../../store/notification-context';
+
 function NewsletterRegistration() {
     const emailInputRef = useRef()
-    const [clicked, setclicked] = useState(false)
+    const notiCtx = useContext(NotificationContext)
    async function  registrationHandler (event) {
     event.preventDefault();
     const enteredEmail = emailInputRef.current.value
+    notiCtx.showNotificaton({
+      "title":'Signing Up....',
+      "message":'Registering to Newsletter',
+      "status":"pending"  
+    })
     const res = await fetch(`http://localhost:3000/api/newsletter`,{
         method:"POST",
         body:JSON.stringify({email:enteredEmail}),
@@ -17,16 +23,23 @@ function NewsletterRegistration() {
     })
     if (!res.ok) {
         console.log("Some error occured")
+        notiCtx.showNotificaton({
+          "title":'Cannot signup!Please try again.',
+          "message":'Failed to register',
+          "status":"error"  
+        })
         return
     }
     const data = await res.json()
     emailInputRef.current.value=""
-    setclicked(true)
+    notiCtx.showNotificaton({
+      "title":'Successfully subscribed!',
+      "message":'Subscribed',
+      "status":"success"  
+    })
     console.log(data)
   }
-  const closeModal=()=>{
-    setclicked(false)
-  }
+
   return (
     <section className={classes.newsletter}>
       <h2>Sign up to stay updated!</h2>
@@ -42,8 +55,6 @@ function NewsletterRegistration() {
           <button>Register</button>
         </div>
       </form>
-      {clicked&&<Backdrop closeModal={closeModal}/>}
-      {clicked&&<Modal closeModal={closeModal} message="Thanks for Subscribing!"/>}
     </section>
   );
 }

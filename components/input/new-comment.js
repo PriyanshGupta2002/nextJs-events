@@ -1,6 +1,4 @@
 import { useRef, useState } from 'react';
-import Backdrop from '../modal/backdrop';
-import Modal from '../modal/modal';
 import classes from './new-comment.module.css';
 
 function NewComment(props) {
@@ -9,9 +7,7 @@ const [clicked, setclicked] = useState(false)
   const emailInputRef = useRef();
   const nameInputRef = useRef();
   const commentInputRef = useRef();
-  const closeModal=()=>{
-    setclicked(false)
-  }
+
   function sendCommentHandler(event) {
     event.preventDefault();
 
@@ -41,7 +37,6 @@ const [clicked, setclicked] = useState(false)
     emailInputRef.current.value=""
     nameInputRef.current.value=""
     commentInputRef.current.value=""
-    setclicked(true)
   }
 
   return (
@@ -64,8 +59,6 @@ const [clicked, setclicked] = useState(false)
       {isInvalid && <p>Please enter a valid email address and comment!</p>}
       <button className={classes.btn}>Submit</button>
     </form>
-    {clicked && <Backdrop closeModal={closeModal}/>}
-    {clicked && <Modal closeModal={closeModal} message="Comment Added Successfully!"/>}
     </>
   );
 }
