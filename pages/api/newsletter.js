@@ -6,7 +6,7 @@ const newsletter=async(req,res)=>{
       "email":req.body.email    
     }
     if (!newInputNewsletter.email || !newInputNewsletter.email.includes("@")) {
-      res.status(422).json({error:"Invalid email"})
+      res.status(422).json({"message":"Invalid email"})
       return
     }
     let client
@@ -24,7 +24,7 @@ const newsletter=async(req,res)=>{
       res.status(500).json({"message":"Inserting data failed!"})
       return
     }
-    res.status(200).json({"success":"Successfully signed up"})
+    res.status(200).json({"message":"Successfully signed up"})
   }
 }
 export default newsletter

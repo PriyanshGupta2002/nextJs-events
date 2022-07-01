@@ -9,7 +9,7 @@ const commentHandler=async(req,res)=>{
             comment:req.body.comment
         }
         if (!comments.email || !comments.email.includes("@") || !comments.comment || !comments.name || comments.name.trim()==='' || comments.comment.trim()==='' ) {
-            res.status(422).json({error:"All inputs are required"})
+            res.status(422).json({"message":"All inputs are required"})
         }
         let client;
         try {

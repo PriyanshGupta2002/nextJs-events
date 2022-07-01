@@ -23,20 +23,27 @@ function NewsletterRegistration() {
     })
     if (!res.ok) {
         console.log("Some error occured")
+        const data = await res.json()
         notiCtx.showNotificaton({
           "title":'Cannot signup!Please try again.',
-          "message":'Failed to register',
+          "message":data.message,
           "status":"error"  
         })
+        setTimeout(() => {
+          notiCtx.hideNotification()
+        }, 2000);
         return
     }
     const data = await res.json()
     emailInputRef.current.value=""
     notiCtx.showNotificaton({
       "title":'Successfully subscribed!',
-      "message":'Subscribed',
+      "message":data.message,
       "status":"success"  
     })
+    setTimeout(() => {
+      notiCtx.hideNotification()
+    }, 2000);
     console.log(data)
   }
 

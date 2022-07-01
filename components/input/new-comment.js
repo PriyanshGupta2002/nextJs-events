@@ -1,12 +1,11 @@
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import classes from './new-comment.module.css';
-
+import NotificationContext from '../../store/notification-context';
 function NewComment(props) {
-  const [isInvalid, setIsInvalid] = useState(false);
-const [clicked, setclicked] = useState(false)
   const emailInputRef = useRef();
   const nameInputRef = useRef();
   const commentInputRef = useRef();
+  const notiCtx= useContext(NotificationContext)
 
   function sendCommentHandler(event) {
     event.preventDefault();
@@ -25,6 +24,14 @@ const [clicked, setclicked] = useState(false)
       enteredComment.trim() === ''
     ) {
       setIsInvalid(true);
+      notiCtx.showNotificaton({
+        "title":"Invalid Inputs",
+        "message":"Cannot add comment because of invalid input",
+        "status":"error"
+      })
+      setTimeout(() => {
+        notiCtx.hideNotification()
+      }, 1000);
       return;
     }
     const commentData= {
@@ -32,11 +39,12 @@ const [clicked, setclicked] = useState(false)
         name:enteredName,
         comment:enteredComment
     }
-    setIsInvalid(false)
     props.onAddComment(commentData);
     emailInputRef.current.value=""
     nameInputRef.current.value=""
     commentInputRef.current.value=""
+
+
   }
 
   return (
@@ -56,7 +64,6 @@ const [clicked, setclicked] = useState(false)
         <label htmlFor='comment'>Your comment</label>
         <textarea id='comment' rows='5' ref={commentInputRef}></textarea>
       </div>
-      {isInvalid && <p>Please enter a valid email address and comment!</p>}
       <button className={classes.btn}>Submit</button>
     </form>
     </>
