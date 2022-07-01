@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+.modal{
+    width: 40rem;
+    z-index: 10;
+    position: fixed;
+    background-color: aliceblue;
+    padding: 32px;
+    top: 6em;
+    left: calc(50% - 19rem);
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.button{
+    padding: 12px ;
+    font-family: 'Montserrat', sans-serif;
+    
+}
+.modalText{
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
+    color: #74dacc;
+    font-size: 1.6rem;
+}

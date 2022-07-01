@@ -6,6 +6,7 @@ import ErrorAlert from '../../components/error-alert/error-alert'
 
 import { getEventById, getFeaturedEvents } from '../../utility/util'
 import Head from 'next/head'
+import Comments from '../../components/input/comments'
 const eventDetails = (props) => {
 
   if (!props.event) {
@@ -28,6 +29,7 @@ const eventDetails = (props) => {
       <EventContent>
         <p>{props.event.description}</p>
       </EventContent>
+      <Comments eventId={props.event.id} />
       </Fragment>
   )
    
